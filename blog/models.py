@@ -3,6 +3,8 @@ from django.db import models as m
 from django.urls import reverse
 from django.utils import timezone
 
+from taggit.managers import TaggableManager
+
 
 class PublishManager(m.Manager):
     def get_queryset(self):
@@ -26,6 +28,7 @@ class Post(m.Model):
     author = m.ForeignKey(User, on_delete=m.CASCADE, related_name='blog_posts')
     status = m.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     body = m.TextField()
+    tags = TaggableManager()
     publish = m.DateTimeField(default=timezone.now)
     created = m.DateTimeField(auto_now_add=True)
     updated = m.DateTimeField(auto_now=True)
